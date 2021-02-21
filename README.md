@@ -14,6 +14,7 @@ Import it in your component:
 
 ```tsx
 import React from 'react'
+import { useUrlHash } from "use-url-hash"
 
 const MyApp = () => {
   const hash = useUrlHash()
