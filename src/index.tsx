@@ -17,10 +17,20 @@ export function useUrlHash(): string {
     typeof window != 'undefined' ? window.location.hash.substr(1) : ''
   )
 
-  useWindowEvent('hashchange', () => {
-    if (urlHash === window.location.hash.substr(1)) return
+  const checkHashValue = () => {
+    if (urlHash === window.location.hash.substring(1)) return
 
-    setUrlHash(window.location.hash.substr(1))
-  })
+    setUrlHash(window.location.hash.substring(1))
+  }
+
+  useEffect(() => {
+    checkHashValue()
+  }, [typeof window != 'undefined' && window?.location.hash])
+
+  useWindowEvent('hashchange', checkHashValue)
+  useWindowEvent('navigate', checkHashValue)
+  useWindowEvent('navigatesuccess', checkHashValue)
+  useWindowEvent('pageshow', checkHashValue)
+
   return urlHash || ''
 }
